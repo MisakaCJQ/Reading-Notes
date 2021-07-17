@@ -4,7 +4,7 @@
 
 ### 1.1MySql逻辑架构
 
-![image-20210716135920298](C:\Users\cai\AppData\Roaming\Typora\typora-user-images\image-20210716135920298.png)
+<img src="./screen shot/HighPerformanceMySQL/1.png" alt="image-20210716135920298"  />
 
 第二层架构是 MySQL 比较有意思的部分。大多数 MySQL 的核心服务功能都在这一层，包括查询解析、分析、优化、缓存以及所有的内置函数（例如，日期、时间、数学和加 密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。
 
@@ -80,7 +80,7 @@
 
 ​		SERIALIZABLE 是**最高的隔离级别**。它通过**强制事务串行执行**，避免了前面说的幻读的问题。简单来说， **SERIALIZABLE 会在读取的每一行数据上都加锁**，所以**可能导致大量的超时和锁争用的问题**。实际应用中也很少用到这个隔离级别，只有在非常需要确保数据的一致性而且可以接受没有井发的情况下，才考虑采用该级别。
 
-![image-20210716142726912](C:\Users\cai\AppData\Roaming\Typora\typora-user-images\image-20210716142726912.png)
+<img src="./screen shot/HighPerformanceMySQL/2.png" alt="image-20210716142726912"  />
 
 补充：
 

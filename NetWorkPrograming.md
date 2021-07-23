@@ -20,7 +20,7 @@
 
 #### 2.1.2 非阻塞式 I/O 模型
 
-<img src="F:\笔记\Reading-Notes\screen shot\NetWorkPrograming\3.png" alt="image-20210723142002216"  />
+<img src="./screen shot/NetWorkPrograming/3.png" alt="image-20210723142002216"  />
 
 进程把一个套接字设置成非阻塞是在通知内核： 所请求的l/O操作非得把本进程置于休眠状态才能完成时，不要把本进程置于休眠状态，**而是返回一个错误**。
 
@@ -94,11 +94,11 @@ select描述符集数量可能存在上限。
 
 poll 提供的功能与select类似，不过在处理流设备时 ，它能够提供额外的信息。
 
-![image-20210723145808366](C:\Users\cai\AppData\Roaming\Typora\typora-user-images\image-20210723145808366.png)
+<img src="./screen shot/NetWorkPrograming/14.png" alt="image-20210723145808366"  />
 
 第一个参数是指向一个结构数组第1个元素的指针 。每个数组元素都是pollfd结构， 用于指定测试某个给定描述符 fd的条件。
 
-![image-20210723150053886](C:\Users\cai\AppData\Roaming\Typora\typora-user-images\image-20210723150053886.png)
+<img src="./screen shot/NetWorkPrograming/15.png" alt="image-20210723150053886"  />
 
 要测试的条件由 events员指定，函数在相应的revent成员中返回该描述符的状态。 （每个描述符都有两个变量， 一个为调用值，另一个为返回结果，从而避免使用值－结果参数。)
 
@@ -128,7 +128,7 @@ epoll 使用一组函数来完成任务，而不是单个函数。
 
 epoll 系列系统调用的主要接口是 epoll_wait 函数。它**在一段超时时间内等待一组文件描述符上的事件**，其原型如下：
 
-![image-20210723161842485](C:\Users\cai\AppData\Roaming\Typora\typora-user-images\image-20210723161842485.png)
+<img src="./screen shot/NetWorkPrograming/16.png" alt="image-20210723161842485"  />
 
 该函数成功时返回就绪的文件描述符的个数，失败时返回－1并设置 errno
 

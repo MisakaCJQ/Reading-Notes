@@ -67,7 +67,7 @@
 - 同步I/O操作：导致请求进程阻塞，直到I/O操作完成
 - 异步I/O操作：不导致请求进程阻塞。
 
-根据上述定义，我们的前4种模型——阻塞式I/O模型、非阻塞式I/O模型、 I/O复用模型和信号驱动I/O模型都是同步I/O模型 ．因为**其中真正的I/O操作 recvfrorn 将阻塞进程**。**只有异I/O模型与POSIX定义的异步I/O相匹配**
+根据上述定义，我们的前4种模型——阻塞式I/O模型、非阻塞式I/O模型、 I/O复用模型和信号驱动I/O模型都是同步I/O模型 ．因为**其中真正的I/O操作 recvfrorn 将阻塞进程**。**只有异步I/O模型与POSIX定义的异步I/O相匹配**
 
 
 
@@ -118,7 +118,7 @@ epoll 使用一组函数来完成任务，而不是单个函数。
 
 <img src="./screen shot/NetWorkPrograming/9.png" alt="image-20210723161502157"  />
 
-用于操作epoll内核时间表的函数：
+用于操作epoll内核事件表的函数：
 
 <img src="./screen shot/NetWorkPrograming/10.png" alt="image-20210723161701492" style="zoom: 67%;" />
 

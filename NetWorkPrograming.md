@@ -4,7 +4,7 @@
 
 ## 1.基本TCP C-S程序套接字编程流程
 
-<img src="./screen shot/NetWorkPrograming/1.png" alt="image-20210723141452074"  />
+<img src="./screenshot/NetWorkPrograming/1.png" alt="image-20210723141452074"  />
 
 ## 2. I/O复用
 
@@ -12,7 +12,7 @@
 
 #### 2.1.1 阻塞式I/O模型
 
-<img src="./screen shot/NetWorkPrograming/2.png" alt="image-20210723141825111"  />
+<img src="./screenshot/NetWorkPrograming/2.png" alt="image-20210723141825111"  />
 
 在图6-1中，进程调用 recvfrom, 其系统调用直到数据报到达且被复制到应用进程的缓冲区中或者发生错误才返回。
 
@@ -20,7 +20,7 @@
 
 #### 2.1.2 非阻塞式 I/O 模型
 
-<img src="./screen shot/NetWorkPrograming/3.png" alt="image-20210723142002216"  />
+<img src="./screenshot/NetWorkPrograming/3.png" alt="image-20210723142002216"  />
 
 进程把一个套接字设置成非阻塞是在通知内核： 所请求的l/O操作非得把本进程置于休眠状态才能完成时，不要把本进程置于休眠状态，**而是返回一个错误**。
 
@@ -32,7 +32,7 @@
 
 #### 2.1.3 I/O复用模型
 
-<img src="./screen shot/NetWorkPrograming/4.png" alt="image-20210723142758198"  />
+<img src="./screenshot/NetWorkPrograming/4.png" alt="image-20210723142758198"  />
 
 我们阻塞于select调用，等待数据报套接字变为可读 select返回套接字可读这一条件 时，我们调用recvfrom把所读数据报复制到应用进程缓冲区。
 
@@ -42,7 +42,7 @@
 
 #### 2.1.4 信号驱动式 I/O 模型
 
-<img src="./screen shot/NetWorkPrograming/5.png" alt="image-20210723143144320"  />
+<img src="./screenshot/NetWorkPrograming/5.png" alt="image-20210723143144320"  />
 
 我们也可以用信号，**让内核在描述符就绪时发送SIGIO信号通知**我们 。定义一个信号处理函数，进程收到信号后就会调用信号处理函数进行I/O操作。这种模型的优势在于**等待数据报到达期间进程不被阻塞。主循环可以继续执行**
 
@@ -50,7 +50,7 @@
 
 #### 2.1.5 异步 I/O 模型
 
-<img src="./screen shot/NetWorkPrograming/6.png" alt="image-20210723143758039"  />
+<img src="./screenshot/NetWorkPrograming/6.png" alt="image-20210723143758039"  />
 
 异步I/O函数的工作机制：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后通知。
 
@@ -62,7 +62,7 @@
 
 #### 2.1.6 五种I/O模型比较
 
-<img src="./screen shot/NetWorkPrograming/7.png" alt="image-20210723144737765"  />
+<img src="./screenshot/NetWorkPrograming/7.png" alt="image-20210723144737765"  />
 
 - 同步I/O操作：导致请求进程阻塞，直到I/O操作完成
 - 异步I/O操作：不导致请求进程阻塞。
@@ -84,7 +84,7 @@
 
 也就是说，我们调用 select 告知内核对哪些描述符（就读、写或异常条件 ）感兴趣以及等待多长时间。我们感兴趣的描述符不局限于套接字 ，**任何描述符都可以使用 select来测试**
 
-<img src="./screen shot/NetWorkPrograming/8.png" alt="image-20210723145337447"  />
+<img src="./screenshot/NetWorkPrograming/8.png" alt="image-20210723145337447"  />
 
 select描述符集数量可能存在上限。
 
@@ -94,11 +94,11 @@ select描述符集数量可能存在上限。
 
 poll 提供的功能与select类似，不过在处理流设备时 ，它能够提供额外的信息。
 
-<img src="./screen shot/NetWorkPrograming/14.png" alt="image-20210723145808366"  />
+<img src="./screenshot/NetWorkPrograming/14.png" alt="image-20210723145808366"  />
 
 第一个参数是指向一个结构数组第1个元素的指针 。每个数组元素都是pollfd结构， 用于指定测试某个给定描述符 fd的条件。
 
-<img src="./screen shot/NetWorkPrograming/15.png" alt="image-20210723150053886"  />
+<img src="./screenshot/NetWorkPrograming/15.png" alt="image-20210723150053886"  />
 
 要测试的条件由 events员指定，函数在相应的revent成员中返回该描述符的状态。 （每个描述符都有两个变量， 一个为调用值，另一个为返回结果，从而避免使用值－结果参数。)
 
@@ -116,11 +116,11 @@ epoll 使用一组函数来完成任务，而不是单个函数。
 
 但 epoll 需要使用一个额外的文件描述符，来唯一标识内核中的这个事件表。这个文件描述符使用如下 epoll_ create 函数来创建：
 
-<img src="./screen shot/NetWorkPrograming/9.png" alt="image-20210723161502157"  />
+<img src="./screenshot/NetWorkPrograming/9.png" alt="image-20210723161502157"  />
 
 用于操作epoll内核事件表的函数：
 
-<img src="./screen shot/NetWorkPrograming/10.png" alt="image-20210723161701492" style="zoom: 67%;" />
+<img src="./screenshot/NetWorkPrograming/10.png" alt="image-20210723161701492" style="zoom: 67%;" />
 
 
 
@@ -128,7 +128,7 @@ epoll 使用一组函数来完成任务，而不是单个函数。
 
 epoll 系列系统调用的主要接口是 epoll_wait 函数。它**在一段超时时间内等待一组文件描述符上的事件**，其原型如下：
 
-<img src="./screen shot/NetWorkPrograming/16.png" alt="image-20210723161842485"  />
+<img src="./screenshot/NetWorkPrograming/16.png" alt="image-20210723161842485"  />
 
 该函数成功时返回就绪的文件描述符的个数，失败时返回－1并设置 errno
 
@@ -263,7 +263,7 @@ epoll_wait 则不同，它采用的是**回调**的方式。**内核检测到就
 
 
 
-<img src="./screen shot/NetWorkPrograming/11.png" alt="image-20210723165932817"  />
+<img src="./screenshot/NetWorkPrograming/11.png" alt="image-20210723165932817"  />
 
 
 
@@ -285,7 +285,7 @@ epoll_wait 则不同，它采用的是**回调**的方式。**内核检测到就
 6.  当socket 可写时， epoll_wait 通知主线程 。主线程将 socket 可写事件放入请求队列。
 7. 睡眠在请求队列上的某个工作线程被唤醒，它往 socket 上写入服务器处理客户请求的结果
 
-<img src="./screen shot/NetWorkPrograming/12.png" alt="image-20210723181142944"  />
+<img src="./screenshot/NetWorkPrograming/12.png" alt="image-20210723181142944"  />
 
 工作线程从请求队列中取出事件后，将根据事件的类型来决定如何处理它： 
 
@@ -307,7 +307,7 @@ epoll_wait 则不同，它采用的是**回调**的方式。**内核检测到就
 6. 当用户缓冲区的**数据被写入 socket 之后，内核将向应用程序发送一个信号**，以通知应用程序数据已经发送完毕。
 7. 应用程序**预先定义好的信号处理函数选择一个工作线程来做善后处理**，比如决定是 否关闭 socket
 
-<img src="./screen shot/NetWorkPrograming/13.png" alt="image-20210723190557677"  />
+<img src="./screenshot/NetWorkPrograming/13.png" alt="image-20210723190557677"  />
 
 连接 socket 上的读写事件是通过 aio_read/aio_write 向内核注册的，因此**内核将通过信号来向应用程序报告连接 socket 上的读写事件**。所以，**主线程中的 epoll_wait 用仅能用来检测监听 socket 上的连接请求事件，而不能用来检测连接 socket 上的读写事件**
 

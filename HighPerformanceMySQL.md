@@ -4,7 +4,7 @@
 
 ### 1.1MySql逻辑架构
 
-<img src="./screen shot/HighPerformanceMySQL/1.png" alt="image-20210716135920298"  />
+<img src="./screenshot/HighPerformanceMySQL/1.png" alt="image-20210716135920298"  />
 
 第二层架构是 MySQL 比较有意思的部分。大多数 MySQL 的核心服务功能都在这一层，包括查询解析、分析、优化、缓存以及所有的内置函数（例如，日期、时间、数学和加 密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。
 
@@ -82,7 +82,7 @@
 
 ​		SERIALIZABLE 是**最高的隔离级别**。它通过**强制事务串行执行**，避免了前面说的幻读的问题。简单来说， **SERIALIZABLE 会在读取的每一行数据上都加锁**，所以**可能导致大量的超时和锁争用的问题**。实际应用中也很少用到这个隔离级别，只有在非常需要确保数据的一致性而且可以接受没有井发的情况下，才考虑采用该级别。
 
-<img src="./screen shot/HighPerformanceMySQL/2.png" alt="image-20210716142726912"  />
+<img src="./screenshot/HighPerformanceMySQL/2.png" alt="image-20210716142726912"  />
 
 补充：
 
@@ -433,15 +433,15 @@ SELECT 语句会变得更慢，因为**逻辑上相邻的行会分布在磁盘�
 
 存储引擎以不同的方式使用 B-Tree 索引，性能也各有不同，各有优劣。例如， **MyISAM 使用前缀压缩技术使得索引更小**，但 **lnnoDB 则按照原数据格式进行存储**。再如 MyISAM 索引通过数据的物理位置引用被索引的行，而 InnoDB 则根据主键引用被索引 的行。
 
-<img src="./screen shot/HighPerformanceMySQL/3.png" alt="image-20210717174235917"  />
+<img src="./screenshot/HighPerformanceMySQL/3.png" alt="image-20210717174235917"  />
 
 B-Tree 索引能够加快访问数据的速度，因为**存储引擎不再需要进行全表扫描来获取需要的数据**，取而代之的是**从索引的根节点（图示井未画出）开始进行搜索**。根节点的槽中 存放了指向子节点的指针，存储引擎根据这些指针向下层查找。通过比较节点页的值和要查找的值可以找到合适的指针进入下层子节点，**这些指针实际上定义了子节点页中值的上限和下限**。最终存储引擎**要么是找到对应的值，要么该记录不存在**。
 
 B-Tree 对索引列是**顺序组织存储**的，所以很**适合查找范围数据**
 
-<img src="./screen shot/HighPerformanceMySQL/4.png" alt="image-20210720145926470"  />
+<img src="./screenshot/HighPerformanceMySQL/4.png" alt="image-20210720145926470"  />
 
-<img src="./screen shot/HighPerformanceMySQL/5.png" alt="image-20210720145938152"  />
+<img src="./screenshot/HighPerformanceMySQL/5.png" alt="image-20210720145938152"  />
 
 索引对多个值进行排序的依据是 CREATE TABLE 语句中定义索引时列的顺序。
 
@@ -582,7 +582,7 @@ mysql> SELECT actor_id FRO,.,sakila.actor WHERE actor_id + 1 = s;
 
 当表有聚簇索引时，**它的数据行实际上存放在索引的叶子页** (leaf page) 中。因为无法同时把数据行存放在两个不同 的地方，所以**一个表只能有一个聚簇索引**。
 
-<img src="./screen shot/HighPerformanceMySQL/6.png" alt="image-20210720170948573"  />
+<img src="./screenshot/HighPerformanceMySQL/6.png" alt="image-20210720170948573"  />
 
 InnoDB 将**通过主键聚集数据**，这也就是说图 5-3 中的”被索引的列”就是主键列。
 
@@ -696,7 +696,7 @@ InnoDB 只有在访问行的时候才会对其加锁，而**索引能够减少 I
 
 删除旧的数据就是一个很好的例子。定期地清除大量数据时，如果用一个大的语句一次 性完成的话，则可能需要一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。**将一个大的 DELETE 语句切分成多个较小的查询可以尽可能小地影响 MySQL 性能**，同时还可以减少 MySQL 复制的延迟。
 
-<img src="./screen shot/HighPerformanceMySQL/7.png" alt="image-20210720181738041"  />
+<img src="./screenshot/HighPerformanceMySQL/7.png" alt="image-20210720181738041"  />
 
 
 
@@ -704,7 +704,7 @@ InnoDB 只有在访问行的时候才会对其加锁，而**索引能够减少 I
 
 很多高性能的应用都会对关联查询进行分解。简单地，可以对每一个表进行一次单表查 询，然后将结果在应用程序中进行关联。
 
-<img src="./screen shot/HighPerformanceMySQL/8.png" alt="image-20210720181916232"  />
+<img src="./screenshot/HighPerformanceMySQL/8.png" alt="image-20210720181916232"  />
 
 在很多场景下，通过重构查询将关联放到应用程序中将会更加高效
 

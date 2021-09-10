@@ -347,3 +347,26 @@ Reactor处理耗时长的操作会造成事件分发的阻塞，影响到后续�
 
 Proactor实现逻辑复杂；依赖操作系统对异步的支持，目前实现了纯异步操作的操作系统少。实现优秀的如windows IOCP，但由于其windows系统用于服务器的局限性，目前应用范围较小；而Unix/Linux系统对纯异步的支持有限，应用事件驱动的主流还是通过select/epoll来实现。
 
+
+
+### 3.4 一些业界开源软件的Reactor模型
+
+#### 3.4.1 Netty
+
+主要是主从Reactor模型
+
+![17](./screenshot/NetWorkPrograming/17.jpg)
+
+#### 3.4.2 nginx
+
+为多进程模型
+
+![18](./screenshot/NetWorkPrograming/18.jpg)
+
+
+
+#### 3.4.3 Redis
+
+为单进程，单线程单Reactor模型。在Redis6版本中还加入了多线程用于IO，但多线程仅也用于IO
+
+![19](./screenshot/NetWorkPrograming/19.jpg)

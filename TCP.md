@@ -1,14 +1,18 @@
-# TCP
+# TCP笔记
 
 一些关于TCP协议的细节。参考自《TCP/IP详解 卷一》
 
 ![1](./screenshot/TCP/1.jpg)
 
+OSI七层，TCP四层，五层协议
+
+![9](./screenshot/TCP/9.jpg)
+
 ## 1 连接管理
 
 一个正常的三次握手与四次挥手
 
-![2](F:\笔记\Reading-Notes\screenshot\TCP\2.jpg)
+![2](./screenshot/TCP/2.jpg)
 
 ### 1.1 三次握手和四次挥手
 
@@ -214,7 +218,7 @@ TCP BBR解决带宽和延迟无法同时测准的办法是，交替测量带宽�
 
 发送窗口和往返延迟，与带宽的对比
 
-![8](F:\笔记\Reading-Notes\screenshot\TCP\8.jpg)
+![8](./screenshot/TCP/8.jpg)
 
 1. **慢启动阶段**
 
@@ -300,3 +304,29 @@ TCP BBR解决带宽和延迟无法同时测准的办法是，交替测量带宽�
 ​		CA签发的证书中会包含网站的域名等信息，如果中间人拿了一个合法的CA证书想掉包，就会被浏览器发现网站不符，从而发现异常。
 
 （注：如果中间人是CA机构的内鬼，那就没办法了23333）
+
+
+
+## 6 HTTP状态码
+
+2开头：成功
+
+3开头：重定向
+
+4开头：客户端错误
+
+5开头：服务端错误
+
+例如：
+
+200 OK 成功
+
+301 Moved Permanently 永久移动
+
+403 Forbidden 拒绝执行
+
+404 Not Found 找不到
+
+500 Internal Server Error 服务器内部错误
+
+501 Not Implemented 服务器不支持此功能

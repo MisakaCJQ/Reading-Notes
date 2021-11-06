@@ -6,7 +6,7 @@
 
 冒泡，插入，选择，希尔，快排，堆排，归并排序
 
-![2](F:\笔记\Reading-Notes\screenshot\Algorithm\2.png)
+![2](./screenshot/Algorithm/2.png)
 
 ### 1.1 冒泡排序
 
@@ -86,7 +86,7 @@ void shellsort(vector<Comparable> & a)//希尔排序
 
 ### 1.5 归并排序
 
-![6](F:\笔记\Reading-Notes\screenshot\Algorithm\6.jpg)
+![6](./screenshot/Algorithm/6.jpg)
 
 
 
@@ -96,17 +96,105 @@ void shellsort(vector<Comparable> & a)//希尔排序
 
 在merge的过程可以保证相同的数字原序不变，**因此是稳定的**
 
+```c++
+	void mergeSort(vector<int>& nums,vector<int>& tmp,int left,int right)
+    {
+        if(left>=right)
+            return;
+        int mid=(left+right)/2;
+        mergeSort(nums,tmp,left,mid);
+        mergeSort(nums,tmp,mid+1,right);
+        int i=left,j=mid+1;//取左右两个数组的起点
+        int k=0;
+        //合并左右两个升序数组
+        while(i<=mid && j<=right)
+        {
+            if(nums[i]<=nums[j])
+            {
+                tmp[k]=nums[i];
+                k++;
+                i++;
+            }
+            else
+            {
+                tmp[k]=nums[j];
+                k++;
+                j++;
+            }
+        }
+        while(i<=mid)
+        {
+            tmp[k]=nums[i];
+            k++;
+            i++;
+        }
+        while(j<=right)
+        {
+            tmp[k]=nums[j];
+            k++;
+            j++;
+        }
+        //从临时数组拷贝回去
+        for(int i=0;i<(right-left+1);i++)
+            nums[left+i]=tmp[i];
+    }
+```
+
 
 
 ### 1.6 快速排序
 
 快速排序的最坏情况时间复杂度是O(n^2)，例如选取枢纽一直选最左或最右元素，然后序列由刚好有序。
 
-最好情况：每回选择的枢纽都能够将序列均等地分为两份。时间复杂度就是O(nlogn)
+最好情况：每回选择的主元都能够将序列均等地分为两份。时间复杂度就是O(nlogn)
 
-由于涉及交换操作，因此是不稳定的排序
+由于**涉及交换操作，因此是不稳定的排序**
 
 没有使用额外的存储空间，因此空间复杂度是O(1)
+
+
+
+代码实现：
+
+```c++
+int partition(vector<int>& nums,int left,int right)
+{
+    //随机选取一个下标作为主元
+    int pivotIndex=rand()%(right-left+1)+left;
+    int pivot=nums[pivotIndex];
+    swap(nums[right],nums[pivotIndex]);//把主元放到最右边
+    int i=left-1,j=left;//i指向主元左半部分的最后一个元素
+    for(;j<=(right-1);j++)
+    {
+        if(nums[j]<=pivot)
+        {
+            i++;
+            swap(nums[i],nums[j]);
+        }
+    }
+        
+    swap(nums[i+1],nums[right]);
+    return i+1;//返回主元所在的下标
+}
+
+void quickSort(vector<int>& nums,int left,int right)
+{
+    if(left<right)
+    {
+        int pos=partition(nums,left,right);
+        quickSort(nums,left,pos-1);
+        quickSort(nums,pos+1,right);
+    }
+}
+
+vector<int> sortArray(vector<int>& nums) 
+{
+    int n=nums.size();
+    srand((unsigned)time(NULL));//初始化随机数种子
+    quickSort(nums,0,n-1);
+    return nums;
+}
+```
 
 
 
@@ -114,7 +202,54 @@ void shellsort(vector<Comparable> & a)//希尔排序
 
 二叉堆。
 
+```c++
+void headDown(vector<int>& nums,int i,int n)
+{//下溯直到两个子结点都小于当前结点
+	while(i<n)
+    {
+    	int left=2*i+1;
+        int right=2*i+2;
+        int maxKid=i;
+        //寻找两个子结点中更大的
+        if(left<n && nums[left]>nums[maxKid])
+            maxKid=left;
+        if(right<n && nums[right]>nums[maxKid])
+            maxKid=right;
+        if(maxKid==i)
+            break;
+        //与更大的子结点交换
+        swap(nums[i],nums[maxKid]);
+        i=maxKid;
+    }
+}
+void buildHeap(vector<int> &nums,int n)
+{//构造大顶堆，从n/2-1开始构造
+    for(int i=n/2-1;i>=0;i--)
+        headDown(nums,i,n);
+}
+
+void heapSort(vector<int>& nums)
+{
+    int n=nums.size();
+    buildHeap(nums,n);
+    for(int i=n-1;i>=1;i--)
+    {
+        swap(nums[i],nums[0]);//把堆顶和尾部交换
+        n--;
+        headDown(nums,0,n);//对被交换上来的元素进行下溯
+    }
+}
+```
+
+
+
 ### 1.8 基数排序
+
+![7](./screenshot/Algorithm/7.gif)
+
+从个位开始按照数字放进桶里排序，有些数字没有的位则用视为0。
+
+每个桶可使用队列实现。
 
 
 
